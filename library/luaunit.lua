@@ -485,6 +485,109 @@ luaunit.assertUserdata = luaunit.assertIsUserdata
 luaunit.assert_is_userdata = luaunit.assertIsUserdata
 luaunit.assert_userdata = luaunit.assertIsUserdata
 
+
+-- LuaUnit generates these at runtime by looping over name lists, so manually
+-- written declarations are the only way to expose them to the language server.
+
+---Compatibility no-op from LuaUnit v2.x. Writes a deprecation warning to
+---stderr; test functions are discovered by name prefix, no wrapping needed.
+function luaunit.wrapFunctions() end
+
+--- Assert that a given number is *NaN* (Not a Number), according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertIsNaN(value, extra_msg) end
+
+--- Assert that a given number is NOT *NaN* (Not a Number), according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertNotIsNaN(value, extra_msg) end
+
+--- Assert that a given number is *infinity* (either positive or negative), according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertIsInf(value, extra_msg) end
+
+--- Assert that a given number is *plus infinity*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertIsPlusInf(value, extra_msg) end
+
+--- Assert that a given number is *minus infinity*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertIsMinusInf(value, extra_msg) end
+
+--- Assert that a given number is NOT *infinity*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertNotIsInf(value, extra_msg) end
+
+--- Assert that a given number is NOT *plus infinity*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertNotIsPlusInf(value, extra_msg) end
+
+--- Assert that a given number is NOT *minus infinity*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertNotIsMinusInf(value, extra_msg) end
+
+--- Assert that a given number is *+0*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertIsPlusZero(value, extra_msg) end
+
+--- Assert that a given number is *-0*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertIsMinusZero(value, extra_msg) end
+
+--- Assert that a given number is NOT *+0*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertNotIsPlusZero(value, extra_msg) end
+
+--- Assert that a given number is NOT *-0*, according to the definition of IEEE-754.
+---@param value number
+---@param extra_msg? string
+function luaunit.assertNotIsMinusZero(value, extra_msg) end
+
+--- Assert that the argument is not a number.
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsNumber(value, extra_msg) end
+
+--- Assert that the argument is not a string.
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsString(value, extra_msg) end
+
+--- Assert that the argument is not a table.
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsTable(value, extra_msg) end
+
+--- Assert that the argument is not a boolean.
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsBoolean(value, extra_msg) end
+
+--- Assert that the argument is not a function.
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsFunction(value, extra_msg) end
+
+--- Assert that the argument is not a userdata.
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsUserdata(value, extra_msg) end
+
+--- Assert that the argument is not a coroutine (an object with type *thread*).
+---@param value any
+---@param extra_msg? string
+function luaunit.assertNotIsThread(value, extra_msg) end
+
 --- Assert that the argument is a coroutine (an object with type *thread* ).
 ---@param value any
 ---@param extra_msg? string If provided, *extra_msg* is a string which will be printed along with the failure message.
@@ -679,5 +782,210 @@ Converts *value* to a nicely formatted string, whatever the type of the value. I
 ---@param value any
 ---@return string
 function luaunit.prettystr(value) end
+
+
+-- Globals exported when the global EXPORT_ASSERT_TO_GLOBALS is set before
+-- requiring 'luaunit'. LuaUnit installs these at runtime by writing into _G,
+-- which static analysis cannot see, so they are declared here unconditionally.
+
+--- The `LuaUnit` runner class, exported as a global when
+--- `EXPORT_ASSERT_TO_GLOBALS` is set before `require('luaunit')`.
+--- @type luaunit.LuaUnit
+LuaUnit = luaunit.LuaUnit
+
+
+-- General assertions.
+assertEquals = luaunit.assertEquals
+assert_equals = luaunit.assertEquals
+assertItemsEquals = luaunit.assertItemsEquals
+assert_items_equals = luaunit.assertItemsEquals
+assertNotEquals = luaunit.assertNotEquals
+assert_not_equals = luaunit.assertNotEquals
+assertAlmostEquals = luaunit.assertAlmostEquals
+assert_almost_equals = luaunit.assertAlmostEquals
+assertNotAlmostEquals = luaunit.assertNotAlmostEquals
+assert_not_almost_equals = luaunit.assertNotAlmostEquals
+assertEvalToTrue = luaunit.assertEvalToTrue
+assert_eval_to_true = luaunit.assertEvalToTrue
+assertEvalToFalse = luaunit.assertEvalToFalse
+assert_eval_to_false = luaunit.assertEvalToFalse
+assertStrContains = luaunit.assertStrContains
+assert_str_contains = luaunit.assertStrContains
+assertStrIContains = luaunit.assertStrIContains
+assert_str_icontains = luaunit.assertStrIContains
+assertNotStrContains = luaunit.assertNotStrContains
+assert_not_str_contains = luaunit.assertNotStrContains
+assertNotStrIContains = luaunit.assertNotStrIContains
+assert_not_str_icontains = luaunit.assertNotStrIContains
+assertStrMatches = luaunit.assertStrMatches
+assert_str_matches = luaunit.assertStrMatches
+assertError = luaunit.assertError
+assert_error = luaunit.assertError
+assertErrorMsgEquals = luaunit.assertErrorMsgEquals
+assert_error_msg_equals = luaunit.assertErrorMsgEquals
+assertErrorMsgContains = luaunit.assertErrorMsgContains
+assert_error_msg_contains = luaunit.assertErrorMsgContains
+assertErrorMsgMatches = luaunit.assertErrorMsgMatches
+assert_error_msg_matches = luaunit.assertErrorMsgMatches
+assertErrorMsgContentEquals = luaunit.assertErrorMsgContentEquals
+assert_error_msg_content_equals = luaunit.assertErrorMsgContentEquals
+assertIs = luaunit.assertIs
+assert_is = luaunit.assertIs
+assertNotIs = luaunit.assertNotIs
+assert_not_is = luaunit.assertNotIs
+assertTableContains = luaunit.assertTableContains
+assert_table_contains = luaunit.assertTableContains
+assertNotTableContains = luaunit.assertNotTableContains
+assert_not_table_contains = luaunit.assertNotTableContains
+-- For compatibility with LuaUnit v2.x (deprecated no-op).
+wrapFunctions = luaunit.wrapFunctions
+WrapFunctions = luaunit.wrapFunctions
+-- For compatibility with LuaUnit v2.x (deprecated no-op).
+wrap_functions = luaunit.wrapFunctions
+-- Type assertions: assertIsXXX -> assert_is_xxx.
+assertIsNumber = luaunit.assertIsNumber
+assert_is_number = luaunit.assertIsNumber
+assertIsString = luaunit.assertIsString
+assert_is_string = luaunit.assertIsString
+assertIsTable = luaunit.assertIsTable
+assert_is_table = luaunit.assertIsTable
+assertIsBoolean = luaunit.assertIsBoolean
+assert_is_boolean = luaunit.assertIsBoolean
+assertIsNil = luaunit.assertIsNil
+assert_is_nil = luaunit.assertIsNil
+assertIsTrue = luaunit.assertIsTrue
+assert_is_true = luaunit.assertIsTrue
+assertIsFalse = luaunit.assertIsFalse
+assert_is_false = luaunit.assertIsFalse
+assertIsNaN = luaunit.assertIsNaN
+assert_is_nan = luaunit.assertIsNaN
+assertIsInf = luaunit.assertIsInf
+assert_is_inf = luaunit.assertIsInf
+assertIsPlusInf = luaunit.assertIsPlusInf
+assert_is_plus_inf = luaunit.assertIsPlusInf
+assertIsMinusInf = luaunit.assertIsMinusInf
+assert_is_minus_inf = luaunit.assertIsMinusInf
+assertIsPlusZero = luaunit.assertIsPlusZero
+assert_is_plus_zero = luaunit.assertIsPlusZero
+assertIsMinusZero = luaunit.assertIsMinusZero
+assert_is_minus_zero = luaunit.assertIsMinusZero
+assertIsFunction = luaunit.assertIsFunction
+assert_is_function = luaunit.assertIsFunction
+assertIsThread = luaunit.assertIsThread
+assert_is_thread = luaunit.assertIsThread
+assertIsUserdata = luaunit.assertIsUserdata
+assert_is_userdata = luaunit.assertIsUserdata
+-- Type assertions: assertIsXXX -> assert_is_xxx.
+assertNumber = luaunit.assertIsNumber
+assertString = luaunit.assertIsString
+assertTable = luaunit.assertIsTable
+assertBoolean = luaunit.assertIsBoolean
+assertNil = luaunit.assertIsNil
+assertTrue = luaunit.assertIsTrue
+assertFalse = luaunit.assertIsFalse
+assertNaN = luaunit.assertIsNaN
+assertInf = luaunit.assertIsInf
+assertPlusInf = luaunit.assertIsPlusInf
+assertMinusInf = luaunit.assertIsMinusInf
+assertPlusZero = luaunit.assertIsPlusZero
+assertMinusZero = luaunit.assertIsMinusZero
+assertFunction = luaunit.assertIsFunction
+assertThread = luaunit.assertIsThread
+assertUserdata = luaunit.assertIsUserdata
+-- Type assertions: assertIsXXX -> assert_is_xxx.
+assert_number = luaunit.assertIsNumber
+assert_string = luaunit.assertIsString
+assert_table = luaunit.assertIsTable
+assert_boolean = luaunit.assertIsBoolean
+assert_nil = luaunit.assertIsNil
+assert_true = luaunit.assertIsTrue
+assert_false = luaunit.assertIsFalse
+assert_nan = luaunit.assertIsNaN
+assert_inf = luaunit.assertIsInf
+assert_plus_inf = luaunit.assertIsPlusInf
+assert_minus_inf = luaunit.assertIsMinusInf
+assert_plus_zero = luaunit.assertIsPlusZero
+assert_minus_zero = luaunit.assertIsMinusZero
+assert_function = luaunit.assertIsFunction
+assert_thread = luaunit.assertIsThread
+assert_userdata = luaunit.assertIsUserdata
+-- Type assertions: assertNotIsXXX -> assert_not_is_xxx.
+assertNotIsNumber = luaunit.assertNotIsNumber
+assert_not_is_number = luaunit.assertNotIsNumber
+assertNotIsString = luaunit.assertNotIsString
+assert_not_is_string = luaunit.assertNotIsString
+assertNotIsTable = luaunit.assertNotIsTable
+assert_not_is_table = luaunit.assertNotIsTable
+assertNotIsBoolean = luaunit.assertNotIsBoolean
+assert_not_is_boolean = luaunit.assertNotIsBoolean
+assertNotIsNil = luaunit.assertNotIsNil
+assert_not_is_nil = luaunit.assertNotIsNil
+-- TODO: review thish 4.
+-- assertNotIsTrue = luaunit.assertNotIsTrue
+-- assert_not_is_true = luaunit.assertNotIsTrue
+-- assertNotIsFalse = luaunit.assertNotIsFalse
+-- assert_not_is_false = luaunit.assertNotIsFalse
+assertNotIsNaN = luaunit.assertNotIsNaN
+assert_not_is_nan = luaunit.assertNotIsNaN
+assertNotIsInf = luaunit.assertNotIsInf
+assert_not_is_inf = luaunit.assertNotIsInf
+assertNotIsPlusInf = luaunit.assertNotIsPlusInf
+assert_not_plus_inf = luaunit.assertNotIsPlusInf
+assertNotIsMinusInf = luaunit.assertNotIsMinusInf
+assert_not_minus_inf = luaunit.assertNotIsMinusInf
+assertNotIsPlusZero = luaunit.assertNotIsPlusZero
+assert_not_plus_zero = luaunit.assertNotIsPlusZero
+assertNotIsMinusZero = luaunit.assertNotIsMinusZero
+assert_not_minus_zero = luaunit.assertNotIsMinusZero
+assertNotIsFunction = luaunit.assertNotIsFunction
+assert_not_is_function = luaunit.assertNotIsFunction
+assertNotIsThread = luaunit.assertNotIsThread
+assert_not_is_thread = luaunit.assertNotIsThread
+assertNotIsUserdata = luaunit.assertNotIsUserdata
+assert_not_is_userdata = luaunit.assertNotIsUserdata
+-- Type assertions: assertNotIsXXX -> assert_not_is_xxx.
+assertNotNumber = luaunit.assertNotIsNumber
+assertNotString = luaunit.assertNotIsString
+assertNotTable = luaunit.assertNotIsTable
+assertNotBoolean = luaunit.assertNotIsBoolean
+assertNotNil = luaunit.assertNotIsNil
+-- TODO: review.
+-- assertNotTrue = luaunit.assertNotIsTrue
+-- assertNotFalse = luaunit.assertNotIsFalse
+assertNotNaN = luaunit.assertNotIsNaN
+assertNotInf = luaunit.assertNotIsInf
+assertNotPlusInf = luaunit.assertNotIsPlusInf
+assertNotMinusInf = luaunit.assertNotIsMinusInf
+assertNotPlusZero = luaunit.assertNotIsPlusZero
+assertNotMinusZero = luaunit.assertNotIsMinusZero
+assertNotFunction = luaunit.assertNotIsFunction
+assertNotThread = luaunit.assertNotIsThread
+assertNotUserdata = luaunit.assertNotIsUserdata
+-- type assertions: assertNotIsXXX -> assert_not_is_xxx
+assert_not_number = luaunit.assertNotIsNumber
+assert_not_string = luaunit.assertNotIsString
+assert_not_table = luaunit.assertNotIsTable
+assert_not_boolean = luaunit.assertNotIsBoolean
+assert_not_nil = luaunit.assertNotIsNil
+-- TODO: review.
+-- assert_not_true = luaunit.assertNotIsTrue
+-- assert_not_false = luaunit.assertNotIsFalse
+assert_not_nan = luaunit.assertNotIsNaN
+assert_not_inf = luaunit.assertNotIsInf
+assert_not_plus_inf = luaunit.assertNotIsPlusInf
+assert_not_minus_inf = luaunit.assertNotIsMinusInf
+assert_not_plus_zero = luaunit.assertNotIsPlusZero
+assert_not_minus_zero = luaunit.assertNotIsMinusZero
+assert_not_function = luaunit.assertNotIsFunction
+assert_not_thread = luaunit.assertNotIsThread
+assert_not_userdata = luaunit.assertNotIsUserdata
+assertIsCoroutine = luaunit.assertIsThread
+assertCoroutine = luaunit.assertIsThread
+assert_is_coroutine = luaunit.assertIsThread
+assert_coroutine = luaunit.assertIsThread
+assertNotIsCoroutine = luaunit.assertNotIsThread
+assertNotCoroutine = luaunit.assertNotIsThread
+assert_not_is_coroutine = luaunit.assertNotIsThread
+assert_not_coroutine = luaunit.assertNotIsThread
 
 return luaunit
